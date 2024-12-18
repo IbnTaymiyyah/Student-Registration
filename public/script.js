@@ -79,3 +79,29 @@ recordForm.addEventListener('submit', async function (e) {
 
 "Adham Display and Listener" 
 "backend code" 
+function editRecord(index) {
+  console.log("Editing record at index:", index);
+  const recordToEdit = records[index];
+  if (recordToEdit) {
+    nameInput.value = recordToEdit.name || '';
+    ageInput.value = recordToEdit.age || '';
+    emailInput.value = recordToEdit.email || '';
+    editIndexInput.value = index;
+    console.log("Record loaded into form for editing:", recordToEdit); 
+  } else {
+    console.error("No record found at index:", index); 
+  }
+}
+
+async function deleteRecord(index) {
+  await fetch(`/api/records/${index}`, {
+    method: 'DELETE'
+  });
+  fetchRecords();
+}
+
+searchInput.addEventListener('input', function (e) {
+  fetchRecords(e.target.value);
+});
+
+fetchRecords();
